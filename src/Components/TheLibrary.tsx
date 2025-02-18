@@ -9,7 +9,7 @@ import Header from './Header';
 export default function TheLibrary(): JSX.Element {
     return (
         <>
-        <Header />
+        <Header>   </Header>
             <main>
                 <Home />
             </main>
