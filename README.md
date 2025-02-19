@@ -1,2 +1,2 @@
-# syntax-surfers-project-2
-Syntax Surfers Project #2
+# syntax-surfers-project-3
+Syntax Surfers Project #3
