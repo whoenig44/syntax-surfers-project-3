@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+
 const Navbar: React.FC = () => {
     return (
       <nav className="flex justify-end bg-gray-800 p-4 shadow-md">
@@ -49,5 +50,5 @@ const Navbar: React.FC = () => {
       </nav>
     );
   };
-  
+ 
   export default Navbar;
