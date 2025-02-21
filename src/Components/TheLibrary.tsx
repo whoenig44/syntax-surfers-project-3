@@ -7,19 +7,27 @@ import MyBooks from './Pages/MyBooks';
 // import Login from './Pages/Login';
 import Footer from './Footer';
 import Header from './Header';
+import { Page } from './PageTypes';
+import { useNavigate } from 'react-router-dom';
 
 export default function TheLibrary(): JSX.Element {
+    const [currentPage, setCurrentPage] = useState<Page>('Home');
+    const navigate = useNavigate();
+    const handlePageChange = (page: Page): void => {
+        setCurrentPage(page);
+        navigate(`/${page.toLowerCase().replace(/ /g, '-')}`);
+    };
     return (
         <>
-        <Header />   
+        <Header currentPage={currentPage} handlePageChange={handlePageChange}  />   
             <main>
-                {/* <Routes>
+                <Routes>
                 <Route path="/" element={<Home />} />
                     <Route path="/books" element={<MyBooks />} />
                     <Route path="/about" element={<About />} />
                        
-                </Routes> */}
-                <Home />
+                </Routes>
+                
             </main>
         <Footer />
         </>

@@ -1,15 +1,15 @@
 import { useState } from 'react'
 // import smanticLogo from './assets/smanticsurferimage.jpg'
 import './App.css'
-import TheLibrary from "./components/TheLibrary";
+import TheLibrary from "./Components/TheLibrary";
+import { BrowserRouter } from "react-router-dom";
 
 
 
 
 
 
-
-const App = () => <TheLibrary />;
+const App = () => <BrowserRouter><TheLibrary/></BrowserRouter>;
 
 export default App;
 
