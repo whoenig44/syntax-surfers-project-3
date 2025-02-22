@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 
-// Define the User interface for the reference (assuming you have a User model already)
+// Define the User interface for the reference
 export interface IBook extends Document {
   title: string;
   author: string;

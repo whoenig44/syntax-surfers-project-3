@@ -29,7 +29,7 @@ export const checkOutBook = async (req: Request, res: Response) => {
     //Create a UserBooks record in teh UserBooks collection
     const userBook = new UserBooks({ 
       userId, 
-      bookId 
+      bookId, 
       checkedOut: true,
     });
     await userBook.save();
@@ -76,3 +76,27 @@ export const getBooksByCategory = async (req: Request, res: Response) => {
     res.status(500).send('Server Error');
   }
 };
+
+// Get books checked out by a user
+export const getBooksByUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params; // Get the userId from the request params
+
+    // Find all entries in the UserBooks collection where the userId matches and checkedOut is true
+    const userBooks = await UserBooks.find({ userId, checkedOut: true });
+
+    if (!userBooks || userBooks.length === 0) {
+      return res.status(404).json({ message: 'No books found for this user.' });
+    }
+
+    // Fetch the details of each book based on the bookId stored in userBooks
+    const books = await Book.find({
+      '_id': { $in: userBooks.map((userBook) => userBook.bookId) }
+    });
+
+    return res.json(books); // Return books to the user
+  } catch (err) {
+    console.error('Error fetching books by user:', err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
