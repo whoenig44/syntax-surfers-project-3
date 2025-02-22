@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite preview --host"
+    "start": "vite preview --host",
+    "seed": "ts-node /scripts/userSeedData.ts"
   },
   "dependencies": {
     "apollo-server-express": "^3.13.0",

@@ -11,14 +11,22 @@ export const typeDefs = gql`
     description: String
   }
 
+  type UserBook {
+    userId: ID!
+    bookId: ID!
+    checkedOut: Boolean!
+}
+
   type Query {
     books: [Book] 
     book(id: ID!): Book
+    getBooksByCategory(category: String!): [Book]
+    userBooks(userId: ID!): [Book]
   }
 
   type Mutation {
-    addBook(title: String!, author: String!, publicationDate: String, isbn: String, categories: [String], description: String): Book
-    updateBook(id: ID!, title: String, author: String, publicationDate: String, isbn: String, categories: [String], description: String): Book
-    deleteBook(id: ID!): Book
+    checkOutBook(userId: ID!, bookId: ID!): UserBook
+    returnBook(userId: ID!, bookId: ID!): UserBook
+}
   }
 `;
