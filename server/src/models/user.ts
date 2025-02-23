@@ -7,6 +7,7 @@ interface IUser extends Document {
   username: string;
   email: string;
   password: string;
+  checkedOutBooks: mongoose.Types.ObjectId[]; //Books the user has checked out
   generateAuthToken(): string;
   matchPassword(password: string): Promise<boolean>;
   setPassword(password: string): Promise<void>;
@@ -28,7 +29,10 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
-}, { timestamps: true });
+  checkedOutBooks: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+  },  
+{ timestamps: true }
+);
 
 // Method to hash and compare passwords
 userSchema.methods.setPassword = async function (password: string) {

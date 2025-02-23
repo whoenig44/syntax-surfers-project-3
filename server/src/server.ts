@@ -1,12 +1,12 @@
-import express from 'express';
-import mongoose from 'mongoose';
+import express, { Application } from 'express';
+//import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';  // Apollo Server for GraphQL
 import { typeDefs } from './graphql/typeDefs';  // Import GraphQL schema
 import { resolvers } from './graphql/resolvers';  // Import GraphQL resolvers
 import bookRoutes from './routes/api/bookRoutes';  // Your existing routes
-import connectDB from './config/connection';
+import { connectDB } from './config/connection';
 
-const app = express();
+const app: Application = express();
 const PORT = process.env.PORT || 5174;
 
 
@@ -16,8 +16,8 @@ app.use(express.json());
 // Set up your routes (API routes) as needed
 app.use('/api', bookRoutes);
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB from cconfig file
+connectDB(); 
 
 // Set up Apollo Server with GraphQL
 const server = new ApolloServer({
@@ -33,6 +33,8 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`GraphQL endpoint is available at http://localhost:${PORT}/graphql`);
 });
+
+export default connectDB;
 
 
 

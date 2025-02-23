@@ -9,7 +9,7 @@
     "start": "npm run build && node dist/server.js --ignore client",
     "dev": "npx nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node dist/seeds/index.js"
+    "seed": "npm run build && node dist/seeds/index.js"
   },
   "nodemonConfig": {
     "watch": [
@@ -22,14 +22,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/react": "^18.3.1",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.3.1"
-    
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

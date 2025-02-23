@@ -22,6 +22,6 @@ const connectDB = async () => {
 };
 
 // Start the connection
-connectDB();
+export { connectDB };
 
 export default mongoose.connection;

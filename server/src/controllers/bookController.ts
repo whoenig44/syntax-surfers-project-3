@@ -34,6 +34,11 @@ export const checkOutBook = async (req: Request, res: Response) => {
     });
     await userBook.save();
 
+    //Updated the checkedOutBooks array int eh User model
+    user.checkedOutBooks.push(bookId);
+    await user.save();
+
+
     return res.status(200).json({ message: 'Book checked out successfully', userBook });
   } catch (err) {
     console.error(err);

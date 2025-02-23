@@ -25,9 +25,9 @@ bookSchema.index({ title: 'text', author: 'text', description: 'text' });
 
 //Virtual field ot reference users who hae checked out the book
 bookSchema.virtual('users', {
-  ref: 'User', //Need to match this to the user model name
+  ref: 'UserBooks', 
   localField: '_id',
-  foreignField: 'checkedOutBooks', // Does this match the filed in teh user schema?
+  foreignField: 'bookId', 
 });
 
 export const Book = mongoose.model<IBook>('Book', bookSchema);

@@ -1,22 +1,34 @@
-import { seedUsers } from './user-seeds.js';
-import {seedGraphs} from './Graph-data-2.js';
-import sequelize from '../config/connection.js';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { seedUsers, seedBooks } from "./userSeedData";
 
-const seedAll = async (): Promise<void> => {
+
+dotenv.config(); // Load environment variables
+
+const MONGO_URI = process.env.MONGODB_URI || "your-default-mongo-uri-here"; // Ensure you have this in `.env`
+
+const seedDatabase = async () => {
   try {
-    await sequelize.sync({ force: true });
-    console.log('\n----- DATABASE SYNCED -----\n');
-    
+    console.log("Connecting to database...");
+    await mongoose.connect(MONGO_URI);
+    console.log("Database connected!");
+
+    // Run seed functions
     await seedUsers();
-    console.log('\n----- USERS SEEDED -----\n');
-    await seedGraphs();
-    console.log('\n----- GRAPHS SEEDED -----\n');
-    
-    process.exit(0);
+    console.log("✅ User data seeded!");
+
+    await seedBooks();
+    console.log("✅ Book data seeded!");
+
+    console.log("🎉 All seed data inserted successfully!");
   } catch (error) {
-    console.error('Error seeding database:', error);
-    process.exit(1);
+    console.error("❌ Error seeding database:", error);
+  } finally {
+    await mongoose.disconnect();
+    console.log("🔌 Database connection closed.");
+    process.exit(0);
   }
 };
 
-seedAll();
+seedDatabase();
+
