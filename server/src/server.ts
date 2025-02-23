@@ -1,12 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';  // Apollo Server for GraphQL
-import { typeDefs } from './graphql/schema';  // Import GraphQL schema
+import { typeDefs } from './graphql/typeDefs';  // Import GraphQL schema
 import { resolvers } from './graphql/resolvers';  // Import GraphQL resolvers
-import bookRoutes from './routes/bookRoutes';  // Your existing routes
+import bookRoutes from './routes/api/bookRoutes';  // Your existing routes
+import connectDB from './config/connection';
 
 const app = express();
 const PORT = process.env.PORT || 5174;
+
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -15,9 +17,7 @@ app.use(express.json());
 app.use('/api', bookRoutes);
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/TheLibrary', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log('MongoDB connection error:', err));
+connectDB();
 
 // Set up Apollo Server with GraphQL
 const server = new ApolloServer({

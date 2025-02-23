@@ -20,6 +20,8 @@ const bookSchema: Schema = new mongoose.Schema({
   description: { type: String, required: true },  
 });
 
+//Index for search functionality
+bookSchema.index({ title: 'text', author: 'text', description: 'text' });
 
 //Virtual field ot reference users who hae checked out the book
 bookSchema.virtual('users', {
