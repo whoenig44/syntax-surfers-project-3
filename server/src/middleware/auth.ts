@@ -22,13 +22,13 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     // Verify the JWT token
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        console.log(err)
+        console.error('JWT verification error:', err);
         return res.sendStatus(403); // Send forbidden status if the token is invalid
       }
 
       // Attach the user information to the request object
       req.user = user as JwtPayload;
-      return next(); // Call the next middleware function
+      return next(); // Call the next middleware function/route handler
     });
   } else {
     res.sendStatus(401); // Send unauthorized status if no authorization header is present

@@ -1,79 +1,63 @@
-import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
+import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
-import {Note} from './note.js';
+import jwt from 'jsonwebtoken';
 
-// Define the attributes for the User model
-interface UserAttributes {
-  id: number;
+// Define the interface for the User document
+interface IUser extends Document {
   username: string;
   email: string;
   password: string;
+  generateAuthToken(): string;
+  matchPassword(password: string): Promise<boolean>;
+  setPassword(password: string): Promise<void>;
 }
 
-// Define the optional attributes for creating a new User
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+// Define the schema for the User model
+const userSchema = new Schema<IUser>({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+}, { timestamps: true });
 
-// Define the User class extending Sequelize's Model
-export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  public id!: number;
-  public username!: string;
-  public email!: string;
-  public password!: string;
+// Method to hash and compare passwords
+userSchema.methods.setPassword = async function (password: string) {
+  const saltRounds = 10;
+  this.password = await bcrypt.hash(password, saltRounds);
+};
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+userSchema.methods.matchPassword = async function (password: string) {
+  return bcrypt.compare(password, this.password);
+};
 
-  // Method to hash and set the password for the user
-  public async setPassword(password: string) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(password, saltRounds);
-  }
-  public static associate() {
-    this.hasMany(Note, { foreignKey: 'authorID', as: 'notes' });
-  }
-
-}
-
-// Define the UserFactory function to initialize the User model
-export function UserFactory(sequelize: Sequelize): typeof User {
-  User.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      tableName: 'users',  // Name of the table in PostgreSQL
-      timestamps: false,
-      sequelize,            // The Sequelize instance that connects to PostgreSQL
-      hooks: {
-        // Before creating a new user, hash and set the password
-        beforeCreate: async (user: User) => {
-          await user.setPassword(user.password);
-        },
-        // Before updating a user, hash and set the new password if it has changed
-        beforeUpdate: async (user: User) => {
-          if (user.changed('password')) {
-            await user.setPassword(user.password);
-          }
-        },
-      }
-    }
+// Generate JWT for user authentication
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    { id: this._id, username: this.username, email: this.email },
+    process.env.JWT_SECRET || 'yourSecretKey', // Replace with your secret key
+    { expiresIn: '1h' } // Set the token expiration (optional)
   );
+  return token;
+};
 
-  return User;  // Return the initialized User model
-}
+// Before saving the user, hash the password if it is being changed or set
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  await this.setPassword(this.password);
+  next();
+});
+
+// Create the User model
+const User = mongoose.model<IUser>('User', userSchema);
+
+export default User;

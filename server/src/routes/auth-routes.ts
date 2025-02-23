@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models/user.js';  // Import the User model
+import User from '../models/user.js';  // Import the User model
 import jwt from 'jsonwebtoken';  // Import the JSON Web Token library
 import bcrypt from 'bcrypt';  // Import the bcrypt library for password hashing
 import { authenticateToken } from '../middleware/auth.js';
@@ -10,7 +10,7 @@ export const login = async (req: Request, res: Response) => {
   console.log(username, password)
 
   try {
-    // Find the user in the database by username
+    // Find the user in the MongoDB database by username
   const user = await User.findOne({
     where: { username },
     attributes: ['id', 'username', 'password'],

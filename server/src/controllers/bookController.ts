@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user';
+import  User from '../models/user';
 import { Book } from '../models/bookModel';
 import { UserBooks } from '../models/userBooksModel'; //Assuming UserBooks is a Mongoose model
 
@@ -26,7 +26,7 @@ export const checkOutBook = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Book already checked out' });
     }
 
-    //Create a UserBooks record in teh UserBooks collection
+    //Create a UserBooks record in the UserBooks collection
     const userBook = new UserBooks({ 
       userId, 
       bookId, 
@@ -34,10 +34,10 @@ export const checkOutBook = async (req: Request, res: Response) => {
     });
     await userBook.save();
 
-    res.status(200).json({ message: 'Book checked out successfully', userBook });
+    return res.status(200).json({ message: 'Book checked out successfully', userBook });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error checking out book' });
+    return res.status(500).json({ message: 'Error checking out book' });
   }
 };
 
@@ -57,10 +57,10 @@ export const returnBook = async (req: Request, res: Response) => {
     userBook.checkedOut = false;
     await userBook.save();
 
-    res.status(200).json({ message: 'Book returned successfully', userBook });
+    return res.status(200).json({ message: 'Book returned successfully', userBook });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error returning book' });
+    return res.status(500).json({ message: 'Error returning book' });
   }
 };
 

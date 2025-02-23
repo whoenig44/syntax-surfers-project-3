@@ -1,7 +1,13 @@
-import { User } from '../models/user';
+import  User from '../models/user';
 import { Book } from '../models/bookModel';
 import { UserBooks } from '../models/userBooksModel';
-import { checkOutBook, getBooksByCategory } from '../controllers/bookController';
+//import { checkOutBook, getBooksByCategory } from '../controllers/bookController';
+
+interface ReturnBookArgs {
+  userId: string;
+  bookId: string;
+}
+
 
 export const resolvers = {
   Query: {
@@ -55,7 +61,7 @@ export const resolvers = {
           throw new Error('Book already checked out');
         }
 
-        //Create a new entry in teh UserBooks collection for this checkout
+        //Create a new entry in the UserBooks collection for this checkout
         const userBook = new UserBooks({
           userId,
           bookId,
@@ -70,7 +76,7 @@ export const resolvers = {
     },
 
 
-    returnBook: async (_: any, { userId, bookId }) => {
+    returnBook: async (_: any, { userId, bookId }: ReturnBookArgs) => {
         try {
             //Find the user-book relationship
             const userBooks = await UserBooks.findOne({ userId, bookId });
@@ -84,11 +90,11 @@ export const resolvers = {
             await userBooks.save();
 
             return userBooks;
-        } catch (err) {
+          } catch (err) {
             throw new Error('Error returning book');
         }
-    },
- },
+      },
+   },
 };
 
 
