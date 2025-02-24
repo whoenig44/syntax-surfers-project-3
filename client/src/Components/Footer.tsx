@@ -1,4 +1,4 @@
-// import logo from "../assets/smanticsurferimage.jpg"
+import logo from "../assets/semanticsurferimage.jpg";
 import React from "react";
 import "./footer.css";
 
@@ -16,9 +16,9 @@ const Footer: React.FC = () => {
                             <li><a href="https://github.com/ShannonJTaylor">Shannon Taylor</a></li>
                         </ul>
                     </div>
-                    {/* <div className="column logo-container">
+                    <div className="column logo-container">
                         <img className="logo" src={logo} alt="Semantic Surfer Logo" />
-                    </div> */}
+                    </div>
                 </div>
                 <div className="copyright">
                     <p>&copy; {(new Date().getFullYear())} All rights reserved</p>
