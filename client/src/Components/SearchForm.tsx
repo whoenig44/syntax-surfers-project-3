@@ -58,9 +58,13 @@ const SearchForm: React.FC = () => {
         className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <SelectItem value="">Select Category</SelectItem>
-        <SelectItem value="Cat1">Cat1</SelectItem>
-        <SelectItem value="Cat2">Cat2</SelectItem>
-        <SelectItem value="Cat3">Cat3</SelectItem>
+        <SelectItem value="Cat1">Cybersecurity</SelectItem>
+        <SelectItem value="Cat2">DevpOs</SelectItem>
+        <SelectItem value="Cat3">Cloud Computing</SelectItem>
+        <SelectItem value="Cat4">Machine Learning/AI</SelectItem>
+        <SelectItem value="Cat5">Software Development</SelectItem>
+        <SelectItem value="Cat6">Networking</SelectItem>
+        <SelectItem value="Cat7">Data Science</SelectItem>
       </Select>
       <Button
         type="submit"

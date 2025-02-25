@@ -3,6 +3,7 @@ import { useState } from 'react'
 import './App.css'
 import TheLibrary from "./Components/TheLibrary";
 import { BrowserRouter } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 
