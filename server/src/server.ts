@@ -1,10 +1,14 @@
 import express, { Application } from 'express';
-//import mongoose from 'mongoose';
-import { ApolloServer } from 'apollo-server-express';  // Apollo Server for GraphQL
+import path from 'path'
+import mongoose from 'mongoose';
+import { ApolloServer } from '@apollo/server';  // Apollo Server for GraphQL
+import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs } from './graphql/typeDefs';  // Import GraphQL schema
 import { resolvers } from './graphql/resolvers';  // Import GraphQL resolvers
-//import bookRoutes from './routes/api/bookRoutes';  // Your existing routes
-//import { connectDB } from './config/connection';
+import bookRoutes from './routes/api/bookRoutes';  // Your existing routes
+import { connectDB } from './config/connection';
+
+
 
 const app: Application = express();
 const PORT = process.env.PORT || 5174;
@@ -19,18 +23,23 @@ const startApolloServer = async () => {
   
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+
+  app.use('/api', bookRoutes);
   
-  app.use('/graphql', expressMiddleware(server));
+  app.use('/graphql', expressMiddleware(server)); 
+  
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
-    app.get('*', (_req, res) => {
+    app.get('*', (_req, res) => { //all unmatched routes return the React index.html file allowing React to handle the routing
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
   }
-  
+
+  connectDB();
+  const db = mongoose.connection;  
   db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
   app.listen(PORT, () => {
@@ -45,9 +54,9 @@ startApolloServer();
 
 
 
-function expressMiddleware(server: ApolloServer<import("apollo-server-express").ExpressContext>): import("express-serve-static-core").RequestHandler<{}, any, any, import("qs").ParsedQs, Record<string, any>> {
-  throw new Error('Function not implemented.');
-}
+// function expressMiddleware(server: ApolloServer<import("apollo-server-express").ExpressContext>): import("express-serve-static-core").RequestHandler<{}, any, any, import("qs").ParsedQs, Record<string, any>> {
+//   throw new Error('Function not implemented.');
+// }
 // // Middleware to parse JSON requests
 // app.use(express.json());
 

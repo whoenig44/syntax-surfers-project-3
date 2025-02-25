@@ -52,7 +52,7 @@ export const returnBook = async (req: Request, res: Response) => {
     const { userId, bookId } = req.body;
 
     //Find the record in UserBooks collection
-    const userBook = await UserBooks.findOne({ where: { userId, bookId } });
+    const userBook = await UserBooks.findOne({ userId, bookId });
 
     if (!userBook || !userBook.checkedOut) {
       return res.status(404).json({ message: 'Book not checked out or not found' });
