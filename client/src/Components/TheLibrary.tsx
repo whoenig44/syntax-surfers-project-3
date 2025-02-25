@@ -23,6 +23,7 @@ export default function TheLibrary(): JSX.Element {
             <main>
                 <Routes>
                 <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
                     <Route path="/books" element={<MyBooks />} />
                     <Route path="/about" element={<About />} />
                        
