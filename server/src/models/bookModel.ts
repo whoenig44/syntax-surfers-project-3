@@ -9,6 +9,7 @@ export interface IBook extends Document {
   isbn: string;
   categories: string[];
   description: string;
+  
 }
 
 const bookSchema: Schema = new mongoose.Schema({
