@@ -33,7 +33,7 @@ const startApolloServer = async () => {
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
-    app.get('*', (_req, res) => { //all unmatched routes return the React index.heml file allowing React to handle the routing
+    app.get('*', (_req, res) => { //all unmatched routes return the React index.html file allowing React to handle the routing
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
   }
