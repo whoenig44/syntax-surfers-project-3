@@ -28,7 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
         <a
           href="/mybooks"
           onClick={(e) => { e.preventDefault(); handlePageChange('MyBooks'); }}
-          className={currentPage === 'About' ? 'nav-link active' : 'nav-link'}
+          className={currentPage === 'MyBooks' ? 'nav-link active' : 'nav-link'}
           style={{ color: 'black', border: '1px solid black' }}
         >
           My Books

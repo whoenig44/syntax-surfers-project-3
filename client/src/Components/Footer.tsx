@@ -19,6 +19,7 @@ const Footer: React.FC = () => {
                     </div>
                     <div className="column logo-container">
                         <img className="logo" src={logo} alt="Semantic Surfer Logo" />
+                        <p>Powered by the Semantic Surfers</p>
                     </div>
                 </div>
                 <div className="copyright">
