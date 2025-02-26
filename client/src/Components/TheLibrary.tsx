@@ -21,6 +21,7 @@ export default function TheLibrary(): JSX.Element {
         <>
         <Header currentPage={currentPage} handlePageChange={handlePageChange}  />   
             <main>
+                <div className="height">
                 <Routes>
                 <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
@@ -28,7 +29,7 @@ export default function TheLibrary(): JSX.Element {
                     <Route path="/about" element={<About />} />
                        
                 </Routes>
-                
+             </div>   
             </main>
         <Footer />
         </>
