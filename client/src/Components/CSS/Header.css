@@ -3,6 +3,19 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #f8f9fa;
+    background-color: #eb7b3b;
+    color: #1d6fa5
     border-bottom: 1px solid #e9ecef;
+}
+
+h1 {
+    color: #1d6fa5
+}
+
+.color {
+    color: #1d6fa5
+}
+
+.nav-items li {
+    color: #1d6fa5
 }

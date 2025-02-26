@@ -1,6 +1,7 @@
 
 import SearchForm from '../SearchForm';
 import logo from '../../assets/LibraryBackdrop.jpg';
+import "../../index.css";
 
 
 

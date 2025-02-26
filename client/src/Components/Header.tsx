@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({currentPage, handlePageChange}) => {
     return (
         <header className="header">
-            <h1 >The Library</h1>
+            <h1 className= "color">The Library</h1>
             <Navbar currentPage={currentPage} handlePageChange={handlePageChange}  />
         </header>
     );
