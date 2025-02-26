@@ -1,6 +1,7 @@
 import React from 'react';
 //import { Link } from 'react-router-dom';
 import { Page } from './PageTypes';
+import "./CSS/Header.css";
 
 
 interface NavbarProps {
@@ -25,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
       </li>
       <li className="nav-item">
         <a
-          href="/books"
+          href="/mybooks"
           onClick={(e) => { e.preventDefault(); handlePageChange('MyBooks'); }}
           className={currentPage === 'About' ? 'nav-link active' : 'nav-link'}
           style={{ color: 'black', border: '1px solid black' }}
