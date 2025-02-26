@@ -27,6 +27,5 @@ export const typeDefs = gql`
   type Mutation {
     checkOutBook(userId: ID!, bookId: ID!): UserBook
     returnBook(userId: ID!, bookId: ID!): UserBook
-}
-  }
+}  
 `;

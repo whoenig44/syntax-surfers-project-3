@@ -31,10 +31,11 @@ export const checkOutBook = async (req: Request, res: Response) => {
       userId, 
       bookId, 
       checkedOut: true,
+      checkoutDate: new Date(),
     });
     await userBook.save();
 
-    //Updated the checkedOutBooks array int eh User model
+    //Updated the checkedOutBooks array in the User model
     user.checkedOutBooks.push(bookId);
     await user.save();
 

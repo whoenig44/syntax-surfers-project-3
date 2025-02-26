@@ -20,9 +20,3 @@ export interface IUserBooks extends Document {
   
   // Create the model
   export const UserBooks = mongoose.model<IUserBooks>('UserBooks', userBooksSchema)
-
-
-
-
-
-
