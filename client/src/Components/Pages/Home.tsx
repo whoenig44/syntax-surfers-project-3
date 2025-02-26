@@ -1,6 +1,6 @@
 
 import SearchForm from '../SearchForm';
-import logo from '../../assets/LibraryBackdrop.jpg';
+import libraryImage from '../../assets/LibraryBackdrop.jpg';
 
 
 
@@ -14,7 +14,7 @@ export default function Home() {
       <p>Click the My Books tab to see which books you currently have checked out.</p>
        
         <SearchForm/>
-        <img src={logo} alt="Library image" style={{height: "375px"}} />           
+        <img src={libraryImage} alt="Library image" style={{height: "375px"}} />           
             
             
         
