@@ -1,0 +1,52 @@
+form div {
+    margin-bottom: 1.5rem; /* More space between fields */
+  }
+  
+  label {
+    display: block; /* Ensures the label is on its own line */
+    margin-bottom: 0.5rem; /* Space between label and input */
+  }
+  
+  input, textarea {
+    display: block; /* Ensures inputs and textareas are block-level elements */
+    width: 100%; /* Full width relative to the container */
+    max-width: 600px; /* Optional: Limit maximum width */
+    padding: 0.5rem;
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+  
+  .note-title {
+    width: 100%; 
+    max-width: 600px; 
+  }
+  
+  .note-message {
+    width: 100%; /* Full width for message */
+    max-width: 600px; /* Optional max width */
+  }
+
+  .date-input {
+    width: 150px; 
+    padding: 0.5rem;
+    box-sizing: border-box; 
+    border: 20px;
+  }
+
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    flex: 1 1 200px; 
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
