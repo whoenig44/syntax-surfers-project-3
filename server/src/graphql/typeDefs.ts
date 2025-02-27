@@ -15,6 +15,9 @@ export const typeDefs = gql`
     userId: ID!
     bookId: ID!
     checkedOut: Boolean!
+    checkoutDate: String
+    returnDate: String
+    
 }
 
   type Query {

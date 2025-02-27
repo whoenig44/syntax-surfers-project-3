@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { seedUsers, seedBooks } from "./userSeedData";
+import { seedUsers, seedBooks } from "./userSeedData.js";
 //import connectDB from "../config/connection.js";
 
 

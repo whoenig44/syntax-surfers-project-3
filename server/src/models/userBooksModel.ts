@@ -15,7 +15,7 @@ export interface IUserBooks extends Document {
     bookId: { type: Types.ObjectId, ref: 'Book', required: true },
     checkedOut: { type: Boolean, default: true },
     checkoutDate: { type: Date, default: Date.now },
-    returnDate: { type: Date }, // Nullable, set when returned
+    returnDate: { type: Date, required: false }, // Nullable, set when returned
   });
   
   // Create the model

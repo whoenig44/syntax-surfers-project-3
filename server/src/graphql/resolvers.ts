@@ -66,6 +66,7 @@ export const resolvers = {
           userId,
           bookId,
           checkedOut: true,
+          cheeckoutDate: new Date(),
         });
         await userBook.save();
 
@@ -74,12 +75,12 @@ export const resolvers = {
         throw new Error('Error checking out book');
       }
     },
-
-
     returnBook: async (_: any, { userId, bookId }: ReturnBookArgs) => {
         try {
             //Find the user-book relationship
             const userBooks = await UserBooks.findOne({ userId, bookId });
+
+            console.log('userBooks', userBooks); //Log result
 
             if (!userBooks || !userBooks.checkedOut) {
                 throw new Error('Book not checked out or not found');
@@ -87,10 +88,12 @@ export const resolvers = {
 
             //Mark book as returned
             userBooks.checkedOut = false;
+            userBooks.returnDate = new Date();
             await userBooks.save();
 
             return userBooks;
           } catch (err) {
+            console.error('Error', err); //Log error
             throw new Error('Error returning book');
         }
       },
