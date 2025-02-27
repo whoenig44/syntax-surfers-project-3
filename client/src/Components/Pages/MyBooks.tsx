@@ -1,22 +1,62 @@
-export default function MyBooks() {
-    return (
-      <div>
-        <h1>My Books</h1>
-        <p>
-          Donec a volutpat quam. Curabitur nec varius justo, sed rutrum ligula.
-          Curabitur pellentesque turpis sit amet eros iaculis, a mollis arcu
-          dictum. Ut vel ante eget massa ornare placerat. Etiam nisl orci, finibus
-          sodales volutpat et, hendrerit ut dolor. Suspendisse porta dictum nunc,
-          sed pretium risus rutrum eget. Nam consequat, ligula in faucibus
-          vestibulum, nisi justo laoreet risus, luctus luctus mi lacus sit amet
-          libero. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos. Mauris pretium condimentum tellus eget
-          lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-          Donec placerat accumsan mi, ut congue neque placerat eu. Donec nec ipsum
-          in velit pellentesque vehicula sit amet at augue. Maecenas aliquam
-          bibendum congue. Pellentesque semper, lectus non ullamcorper iaculis,
-          est ligula suscipit velit, sed bibendum turpis dui in sapien.
-        </p>
-      </div>
-    );
-  }
+import { useState, useEffect } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_USER_BOOKS } from '../../graphql/Queries';
+import { RETURN_BOOK } from '../../graphql/Mutations';
+import { getUserFromToken } from '../../utils/auth';
+
+
+const user = getUserFromToken();
+console.log(user?.id); //Gives you the user ID
+
+const MyBooks = () => {
+  const [userId, setUserId] = useState<string>(''); //Set the userId here
+  useEffect(() => {
+    const user = getUserFromToken();
+    if (user?.id) {
+      setUserId(user.id);
+    }
+  }, []);  //Empty dependency array means this runs once when the component mounts  
+  
+  const { loading, error, data } = useQuery(GET_USER_BOOKS, {
+    variables: { userId },
+    skip: !userId, //Skip query until userId is available
+  });
+    
+  const [returnBook] = useMutation(RETURN_BOOK);
+
+  const handleReturnBook = async (bookId: string) => {
+    try {
+      const { data } = await returnBook({
+        variables: { userId, bookId },
+      });
+      console.log('Book returned', data.returnBook);
+    } catch (error) {
+      console.error('Error returning book', error);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+
+return (
+  <div>
+    <h1>My Books</h1>
+    <ul>
+      {data.userBooks.map((book: any) => (
+        <li key={book._id}>
+          <span>Book ID: {book.bookId.title}</span> - 
+            {book.checkedOut ? "Checked out" : "Returned"}
+            {book.checkedOut && (
+              <button onClick={() => handleReturnBook(book.bookId._id)}>
+                Return Book
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default MyBooks;
