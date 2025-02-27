@@ -31,7 +31,7 @@ body {
 }
 
 .height {
-  height: 70vh;
+  min-height: 70vh;
 }
 
 h1 {
