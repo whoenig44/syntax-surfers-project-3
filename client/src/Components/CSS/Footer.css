@@ -1,15 +1,21 @@
+
 footer {
     padding: 20px 0;
-    background-color: #333;
-    color: #fff;
+    background-color: #eb7b3b;
+    color: #1d6fa5;
+}
+
+.contributors {
+    color: #1d6fa5;
 }
 
 footer ul {
     list-style: none;
+    color: #1d6fa5
 }
 
 footer a {
-    color: aliceblue;
+    color: #1d6fa5;
 }
 
 .footer-content {
@@ -27,11 +33,11 @@ footer a {
 }
 
 .logo {
-    height: 100px;
+    height: 175px;
 }
 
 .logo-container {
-    margin-left: auto; /* This will push the logo to the right */
+    margin-left: 45vw; /* This will push the logo to the right */
 }
 
 .copyright {
