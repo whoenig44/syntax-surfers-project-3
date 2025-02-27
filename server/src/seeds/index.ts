@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { seedUsers, seedBooks } from "./userSeedData";
-//import connectDB from "../config/connection";
+//import connectDB from "../config/connection.js";
 
 
 dotenv.config(); // Load environment variables

@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import  User  from '../models/user';
-import { Book } from '../models/bookModel';
-import { UserBooks } from '../models/userBooksModel';
-import { books } from './seedData';
+import  User  from '../models/user.js';
+import { Book } from '../models/bookModel.js';
+import { UserBooks } from '../models/userBooksModel.js';
+import { books } from './seedData.js';
 //import fs from 'fs';
 
 // Sample user data (with plain-text passwords, to be hashed)

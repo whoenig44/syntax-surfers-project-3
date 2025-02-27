@@ -1,14 +1,18 @@
 import express, { Application } from 'express';
 import path from 'path'
+import { fileURLToPath } from 'url'; //Import for handling ES module paths
+import { dirname } from 'path'; //Import for handling ES module paths
 import mongoose from 'mongoose';
 import { ApolloServer } from '@apollo/server';  
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs } from './graphql/typeDefs.js';
 import { resolvers } from './graphql/resolvers.js';  
-import bookRoutes from './routes/api/bookRoutes';  
-import { connectDB } from './config/connection';
+import bookRoutes from './routes/api/bookRoutes.js';  
+import  connectDB  from './config/connection.js';
 
-
+//__dirname is not available when using ES modules, so we use the following two lines to get the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app: Application = express();
 const PORT = process.env.PORT || 5174;
