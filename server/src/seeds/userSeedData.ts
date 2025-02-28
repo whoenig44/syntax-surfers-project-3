@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import  User  from '../models/user';
-import { Book } from '../models/bookModel';
-import { UserBooks } from '../models/userBooksModel';
-import { books } from './seedData';
+import  User  from '../models/user.js';
+import { Book } from '../models/bookModel.js';
+import { UserBooks } from '../models/userBooksModel.js';
+import { books } from './seedData.js';
 //import fs from 'fs';
 
 // Sample user data (with plain-text passwords, to be hashed)
@@ -26,8 +26,8 @@ const users = [
 
 //Sample user-book relationships
 const userBooks = [
-    { username: "john_doe", bookTitle: "The Pragmatic Programmer", checkedOut: true },
-    { username: "jane_smith", bookTitle: "Clean Code", checkedOut: true }
+    { username: "john_doe", bookTitle: "The Pragmatic Programmer", checkedOut: true, checkoutDate: new Date('2023-05-01'), returnDate: new Date('2023-05-15') },
+    { username: "jane_smith", bookTitle: "Clean Code", checkedOut: true, checkoutDate: new Date('2023-05-10'), returnDate: null }
   ];
 
 // Hash passwords and seed users

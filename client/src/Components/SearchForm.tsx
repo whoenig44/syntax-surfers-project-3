@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Select, SelectItem } from "./ui/select";
 import { Button } from "./ui/button";
+import { useQuery } from '@apollo/client';
+import { GET_BOOKS_BY_SEARCH } from '../graphql/Queries'; // Import the query
+
 
 
 const SearchForm: React.FC = () => {
@@ -10,6 +13,16 @@ const SearchForm: React.FC = () => {
     lastName: "",
     bookTitle: "",
     category: ""
+  });
+
+  const { loading, error, data } = useQuery(GET_BOOKS_BY_SEARCH, {
+    variables: { 
+      title: formData.bookTitle,
+      authorFirstName: formData.firstName,
+      authorLastName: formData.lastName,
+      category: formData.category
+    },
+    skip: !formData.bookTitle && !formData.firstName && !formData.lastName && !formData.category     //Skip if no search 
   });
 
 
@@ -22,6 +35,7 @@ const SearchForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Search parameters:", formData);
+    // We trigger the query with form data automatically with the useQuery hook
   };
 
 
@@ -72,6 +86,19 @@ const SearchForm: React.FC = () => {
       >
         Search
       </Button>
+    {/* Display books after search */}
+      {loading && <p>Loading...</p>}
+      {error && <p>Error occurred: {error.message}</p>}
+      {data && (
+        <div>
+          <h3>Search Results</h3>
+          <ul>
+            {data.getBooksBySearch.map((book: any) => (
+              <li key={book.id}>{book.title} by {book.author}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </form>
   );
 };
