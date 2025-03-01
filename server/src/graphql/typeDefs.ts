@@ -30,5 +30,5 @@ export const typeDefs = gql`
     checkOutBook(userId: ID!, bookId: ID!): UserBook
     returnBook(userId: ID!, bookId: ID!): UserBook
 }
-  }
+  
 `;

@@ -1,6 +1,6 @@
-import  User from '../models/user';
-import { Book } from '../models/bookModel';
-import { UserBooks } from '../models/userBooksModel';
+import  User from '../models/user.js';
+import { Book } from '../models/bookModel.js';
+import { UserBooks } from '../models/userBooksModel.js';
 //import { checkOutBook, getBooksByCategory } from '../controllers/bookController';
 
 interface ReturnBookArgs {

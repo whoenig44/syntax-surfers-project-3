@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import  User from '../models/user';
-import { Book } from '../models/bookModel';
-import { UserBooks } from '../models/userBooksModel'; //Assuming UserBooks is a Mongoose model
+import  User from '../models/user.js';
+import { Book } from '../models/bookModel.js';
+import { UserBooks } from '../models/userBooksModel.js'; //Assuming UserBooks is a Mongoose model
 
 //Checkout a book
 export const checkOutBook = async (req: Request, res: Response) => {

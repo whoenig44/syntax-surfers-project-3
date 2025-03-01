@@ -3,10 +3,10 @@ import path from 'path'
 import mongoose from 'mongoose';
 import { ApolloServer } from '@apollo/server';  // Apollo Server for GraphQL
 import { expressMiddleware } from '@apollo/server/express4';
-import { typeDefs } from './graphql/typeDefs';  // Import GraphQL schema
-import { resolvers } from './graphql/resolvers';  // Import GraphQL resolvers
-import bookRoutes from './routes/api/bookRoutes';  // Your existing routes
-import { connectDB } from './config/connection';
+import { typeDefs } from './graphql/typeDefs.js';  // Import GraphQL schema
+import { resolvers } from './graphql/resolvers.js';  // Import GraphQL resolvers
+import bookRoutes from './routes/api/bookRoutes.js';  // Your existing routes
+import { connectDB } from './config/connection.js';
 
 
 

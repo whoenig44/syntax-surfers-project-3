@@ -1,6 +1,6 @@
 import express from 'express';
 import type { Request, Response } from 'express';
-import  User  from '../../models/user';
+import  User  from '../../models/user.js';
 //import { Book }  from '../../models/bookModel';
 import mongoose from 'mongoose';
 

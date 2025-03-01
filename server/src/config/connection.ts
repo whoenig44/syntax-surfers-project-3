@@ -11,7 +11,7 @@ const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
       // Optional: Suppress deprecation warnings (not always needed in newer versions)
-      useFindAndModify: false,
+      // useFindAndModify: false, Removed to prevent connection error
     } as mongoose.ConnectOptions);
     
     console.log(`📡 MongoDB Connected: ${mongoose.connection.host}`);
@@ -20,6 +20,7 @@ const connectDB = async () => {
     process.exit(1); // Exit process with failure
   }
 };
+
 
 // Start the connection
 export { connectDB };
