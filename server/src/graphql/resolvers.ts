@@ -19,6 +19,25 @@ export const resolvers = {
             throw new Error('Error fetching books by category');
         }
     }, 
+
+    getBooksByName: async (_: any, { author }: any) => {
+        try {
+            const books = await Book.find({ author });
+            return books;
+        } catch (err) {
+            throw new Error('Error fetching books by author');
+        }
+    },
+
+    getBooksByTitle: async (_: any, { title }: any) => {
+        try {
+            const books = await Book.find
+            ({ title });
+            return books;
+        } catch (err) {
+            throw new Error('Error fetching books by title');
+        }
+    },
   
   userBooks: async (_: any, { userId }: any) => {
     try {

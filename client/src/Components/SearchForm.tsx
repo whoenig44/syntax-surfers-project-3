@@ -6,8 +6,8 @@ import { Button } from "./ui/button";
 
 const SearchForm: React.FC = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    
+    authorName: "",
     bookTitle: "",
     category: ""
   });
@@ -29,17 +29,9 @@ const SearchForm: React.FC = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded-lg shadow-md w-96 bg-white">
       <Input
         type="text"
-        name="firstName"
-        placeholder="Author's First Name"
-        value={formData.firstName}
-        onChange={handleChange}
-        className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Input
-        type="text"
-        name="lastName"
-        placeholder="Author's Last Name"
-        value={formData.lastName}
+        name="authorName"
+        placeholder="Author's Name"
+        value={formData.authorName}
         onChange={handleChange}
         className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />

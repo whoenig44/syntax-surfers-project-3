@@ -82,6 +82,30 @@ export const getBooksByCategory = async (req: Request, res: Response) => {
   }
 };
 
+export const getBooksByName = async (req: Request, res: Response) => {
+  const author = req.params.author;
+
+  try {
+    const books = await Book.find({ author: author });
+    res.json(books);  // Send back the books as a response
+  } catch (error) {
+    console.error('Error fetching books by author:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+export const getBooksByTitle = async (req: Request, res: Response) => {
+  const title = req.params.title;
+
+  try {
+    const books = await Book.find({ title: title });
+    res.json(books);  // Send back the books as a response
+  } catch (error) {
+    console.error('Error fetching books by title:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
 // Get books checked out by a user
 export const getBooksByUser = async (req: Request, res: Response) => {
   try {
