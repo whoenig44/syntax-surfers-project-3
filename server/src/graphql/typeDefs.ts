@@ -23,6 +23,7 @@ export const typeDefs = gql`
     getBooksByCategory(category: String!): [Book]
     getBooksByName(author: String!): [Book]
     getBooksByTitle(title: String!): [Book]
+    getBooksBySearch(author: String, title: String, category: String): [Book]
     userBooks(userId: ID!): [Book]
   }
 

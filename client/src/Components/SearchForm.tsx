@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Select, SelectItem } from "./ui/select";
 import { Button } from "./ui/button";
+const apiEndPoint = process.env.NODE_ENV === "development" ? "http://localhost:3001": ""
 
 
 const SearchForm: React.FC = () => {
@@ -19,9 +20,22 @@ const SearchForm: React.FC = () => {
   };
 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Search parameters:", formData);
+    try {
+      const res = await fetch(`${apiEndPoint}/api/books/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log("Search results:", data);
+    } catch (error) {
+      console.error("Error searching for books:", error);
+    }
   };
 
 

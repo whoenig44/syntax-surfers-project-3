@@ -106,6 +106,20 @@ export const getBooksByTitle = async (req: Request, res: Response) => {
   }
 };
 
+export const getBooksBySearch = async (req: Request, res: Response) => {
+  const author = req.params.author;
+  const title = req.params.title;
+  const category = req.params.category;
+
+  try {
+    const books = await Book.find({$or: [{ title: title }, { author: author }, { categories: category }]});
+    res.json(books);  // Send back the books as a response
+  } catch (error) {
+    console.error('Error fetching books by author:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
 // Get books checked out by a user
 export const getBooksByUser = async (req: Request, res: Response) => {
   try {
