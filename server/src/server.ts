@@ -7,7 +7,7 @@ import { typeDefs } from './graphql/typeDefs.js';  // Import GraphQL schema
 import { resolvers } from './graphql/resolvers.js';  // Import GraphQL resolvers
 import bookRoutes from './routes/api/bookRoutes.js';  // Your existing routes
 import { connectDB } from './config/connection.js';
-
+import { fileURLToPath } from 'url';
 
 
 const app: Application = express();
@@ -28,6 +28,8 @@ const startApolloServer = async () => {
   
   app.use('/graphql', expressMiddleware(server)); 
   
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === 'production') {
