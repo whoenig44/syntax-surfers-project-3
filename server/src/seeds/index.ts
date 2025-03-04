@@ -1,19 +1,17 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { seedUsers, seedBooks } from "./userSeedData.js";
-//import connectDB from "../config/connection.js";
+import { seedUsers, seedBooks } from "./userSeedData";
 
 
 dotenv.config(); // Load environment variables
 
-const activeUser = process.env.ACTIVE_USER || "USER1";
-const MONGO_URI = process.env[`MONGODB_URI_${activeUser.toUpperCase()}`] || "mongodb://127.0.0.1:27017/LibraryApp";
+const MONGO_URI = process.env.MONGODB_URI || "your-default-mongo-uri-here"; // Ensure you have this in `.env`
 
 const seedDatabase = async () => {
   try {
-    console.log("Connecting to database as ${activeUser}...");  
+    console.log("Connecting to database...");
     await mongoose.connect(MONGO_URI);
-    console.log("✅ Database connected!"); 
+    console.log("Database connected!");
 
     // Run seed functions
     await seedUsers();

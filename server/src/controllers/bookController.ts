@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
 import  User from '../models/user.js';
 import { Book } from '../models/bookModel.js';
-<<<<<<< HEAD
-import { UserBooks } from '../models/userBooksModel.js'; 
-=======
 import { UserBooks } from '../models/userBooksModel.js'; //Assuming UserBooks is a Mongoose model
->>>>>>> db8b55816404d40a77eedbfd30e4a41df7e550d3
 
 //Checkout a book
 export const checkOutBook = async (req: Request, res: Response) => {
@@ -35,11 +31,10 @@ export const checkOutBook = async (req: Request, res: Response) => {
       userId, 
       bookId, 
       checkedOut: true,
-      checkoutDate: new Date(),
     });
     await userBook.save();
 
-    //Updated the checkedOutBooks array in the User model
+    //Updated the checkedOutBooks array int eh User model
     user.checkedOutBooks.push(bookId);
     await user.save();
 

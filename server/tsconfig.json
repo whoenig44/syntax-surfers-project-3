@@ -22,8 +22,7 @@
   },
   "include": [
     "src/**/*.ts",  // Only include server files in the 'src' folder
-    "src/seeds/**/*.ts",  // Include seed files in the 'src/seeds' folder
-    "src/routes/api/**/*.ts",
+    "src/seeds/**/*.ts"  // Include seed files in the 'src/seeds' folder
   ],
   "exclude": [
     "node_modules",

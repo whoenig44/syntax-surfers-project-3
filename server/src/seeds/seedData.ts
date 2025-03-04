@@ -1,5 +1,3 @@
-import { Book } from "../models/bookModel.js";
-
 export const books = [
     {
         title: "The Pragmatic Programmer",
@@ -402,12 +400,3 @@ export const books = [
         description: "Explores the use of probabilistic graphical models in AI applications."
       }
     ];
-
-    export const seedBooks = async () => {
-        try {
-          await Book.insertMany(books);
-          console.log('✅ Books seeded successfully');
-        } catch (err) {
-          console.error('❌ Error seeding books:', err);
-        }
-      }
