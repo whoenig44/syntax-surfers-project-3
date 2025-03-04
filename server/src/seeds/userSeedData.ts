@@ -26,8 +26,8 @@ const users = [
 
 //Sample user-book relationships
 const userBooks = [
-    { username: "john_doe", bookTitle: "The Pragmatic Programmer", checkedOut: true },
-    { username: "jane_smith", bookTitle: "Clean Code", checkedOut: true }
+    { username: "john_doe", bookTitle: "The Pragmatic Programmer", checkedOut: true, checkoutDate: new Date('2023-05-01'), returnDate: new Date('2023-05-15') },
+    { username: "jane_smith", bookTitle: "Clean Code", checkedOut: true, checkoutDate: new Date('2023-05-10'), returnDate: null }
   ];
 
 // Hash passwords and seed users
