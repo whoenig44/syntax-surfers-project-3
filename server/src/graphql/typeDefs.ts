@@ -24,11 +24,19 @@ export const typeDefs = gql`
     books: [Book] 
     book(id: ID!): Book
     getBooksByCategory(category: String!): [Book]
+    getBooksByName(author: String!): [Book]
+    getBooksByTitle(title: String!): [Book]
+    getBooksBySearch(author: String, title: String, category: String): [Book]
     userBooks(userId: ID!): [Book]
   }
 
   type Mutation {
     checkOutBook(userId: ID!, bookId: ID!): UserBook
     returnBook(userId: ID!, bookId: ID!): UserBook
+<<<<<<< HEAD
 }  
+=======
+}
+  
+>>>>>>> db8b55816404d40a77eedbfd30e4a41df7e550d3
 `;

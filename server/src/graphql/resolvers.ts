@@ -1,7 +1,12 @@
 import  User from '../models/user.js';
 import { Book } from '../models/bookModel.js';
 import { UserBooks } from '../models/userBooksModel.js';
+<<<<<<< HEAD
 //import { checkOutBook, getBooksByCategory } from '../controllers/bookController.js';
+=======
+//import { checkOutBook, getBooksByCategory } from '../controllers/bookController';
+>>>>>>> db8b55816404d40a77eedbfd30e4a41df7e550d3
+
 
 interface ReturnBookArgs {
   userId: string;
@@ -19,6 +24,37 @@ export const resolvers = {
             throw new Error('Error fetching books by category');
         }
     }, 
+
+    getBooksByName: async (_: any, { author }: any) => {
+        try {
+            const books = await Book.find({ author });
+            return books;
+        } catch (err) {
+            throw new Error('Error fetching books by author');
+        }
+    },
+
+    getBooksByTitle: async (_: any, { title }: any) => {
+        try {
+            const books = await Book.find
+            ({ title });
+            return books;
+        } catch (err) {
+            throw new Error('Error fetching books by title');
+        }
+    },
+
+  getBooksBySearch: async (_: any, { author, title, category }: any) => {
+      
+    
+      try {
+        const books = await Book.find({$or: [{ title: title }, { author: author }, { categories: category }]});
+        return books;  // Send back the books as a response
+      } catch (error) {
+        console.error('Error fetching books by author:', error);
+        throw new Error('Server Error');
+      }
+    },
   
   userBooks: async (_: any, { userId }: any) => {
     try {

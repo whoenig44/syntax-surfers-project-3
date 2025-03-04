@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import  User from '../models/user.js';
 import { Book } from '../models/bookModel.js';
+<<<<<<< HEAD
 import { UserBooks } from '../models/userBooksModel.js'; 
+=======
+import { UserBooks } from '../models/userBooksModel.js'; //Assuming UserBooks is a Mongoose model
+>>>>>>> db8b55816404d40a77eedbfd30e4a41df7e550d3
 
 //Checkout a book
 export const checkOutBook = async (req: Request, res: Response) => {
@@ -79,6 +83,44 @@ export const getBooksByCategory = async (req: Request, res: Response) => {
     res.json(books);  // Send back the books as a response
   } catch (error) {
     console.error('Error fetching books by category:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+export const getBooksByName = async (req: Request, res: Response) => {
+  const author = req.params.author;
+
+  try {
+    const books = await Book.find({ author: author });
+    res.json(books);  // Send back the books as a response
+  } catch (error) {
+    console.error('Error fetching books by author:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+export const getBooksByTitle = async (req: Request, res: Response) => {
+  const title = req.params.title;
+
+  try {
+    const books = await Book.find({ title: title });
+    res.json(books);  // Send back the books as a response
+  } catch (error) {
+    console.error('Error fetching books by title:', error);
+    res.status(500).send('Server Error');
+  }
+};
+
+export const getBooksBySearch = async (req: Request, res: Response) => {
+  const author = req.params.author;
+  const title = req.params.title;
+  const category = req.params.category;
+
+  try {
+    const books = await Book.find({$or: [{ title: title }, { author: author }, { categories: category }]});
+    res.json(books);  // Send back the books as a response
+  } catch (error) {
+    console.error('Error fetching books by author:', error);
     res.status(500).send('Server Error');
   }
 };

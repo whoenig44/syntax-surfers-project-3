@@ -5,10 +5,18 @@ import { dirname } from 'path'; //Import for handling ES module paths
 import mongoose from 'mongoose';
 import { ApolloServer } from '@apollo/server';  
 import { expressMiddleware } from '@apollo/server/express4';
+<<<<<<< HEAD
 import { typeDefs } from './graphql/typeDefs.js';
 import { resolvers } from './graphql/resolvers.js';  
 import bookRoutes from './routes/api/bookRoutes.js';  
 import  connectDB  from './config/connection.js';
+=======
+import { typeDefs } from './graphql/typeDefs.js';  // Import GraphQL schema
+import { resolvers } from './graphql/resolvers.js';  // Import GraphQL resolvers
+import bookRoutes from './routes/api/bookRoutes.js';  // Your existing routes
+import { connectDB } from './config/connection.js';
+import { fileURLToPath } from 'url';
+>>>>>>> db8b55816404d40a77eedbfd30e4a41df7e550d3
 
 //__dirname is not available when using ES modules, so we use the following two lines to get the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +46,8 @@ const startApolloServer = async () => {
   
   app.use('/graphql', expressMiddleware(server)); 
   
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === 'production') {
