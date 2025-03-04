@@ -1,5 +1,9 @@
 import express from 'express';
+<<<<<<< HEAD
+import { getBooksByCategory, checkOutBook, returnBook, getBooksByUser } from '../../controllers/bookController.js';
+=======
 import { getBooksByCategory, checkOutBook, returnBook, getBooksByUser, getBooksBySearch  } from '../../controllers/bookController.js';
+>>>>>>> db8b55816404d40a77eedbfd30e4a41df7e550d3
 
 const router = express.Router();
 
