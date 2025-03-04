@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 const router = express.Router();
 
 // GET /users - Get all users
-router.get('/', async (_req: Request, res: Response) => {
+router.get('/', async (__req: Request, res: Response) => {
   try {
     const users = await User.find({}, { password: 0 }); // Exclude password from response
     res.json(users);
