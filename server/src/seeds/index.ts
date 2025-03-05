@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { seedUsers, seedBooks } from "./userSeedData";
+import { seedUsers, seedBooks } from "./userSeedData.js";
 
 
 dotenv.config(); // Load environment variables
 
-const MONGO_URI = process.env.MONGODB_URI || "your-default-mongo-uri-here"; // Ensure you have this in `.env`
+const MONGO_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/LibraryApp"; // Ensure you have this in `.env`
+console.log(MONGO_URI);
 
 const seedDatabase = async () => {
   try {

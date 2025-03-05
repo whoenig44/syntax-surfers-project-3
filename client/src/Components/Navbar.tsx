@@ -19,7 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
           href="/"
           onClick={(e) => { e.preventDefault(); handlePageChange('Home'); }}
           className={currentPage === 'Home' ? 'nav-link active' : 'nav-link'}
-          style={{ color: 'black', border: '1px solid black' }}
+          
         >
           Home
         </a>
@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
           href="/mybooks"
           onClick={(e) => { e.preventDefault(); handlePageChange('MyBooks'); }}
           className={currentPage === 'MyBooks' ? 'nav-link active' : 'nav-link'}
-          style={{ color: 'black', border: '1px solid black' }}
+          
         >
           My Books
         </a>
@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
           href="/about"
           onClick={(e) => { e.preventDefault(); handlePageChange('About'); }}
           className={currentPage === 'About' ? 'nav-link active' : 'nav-link'}
-          style={{ color: 'black', border: '1px solid black' }}
+          
         >
           About
         </a>

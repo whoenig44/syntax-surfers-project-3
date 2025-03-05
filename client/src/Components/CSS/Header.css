@@ -4,18 +4,20 @@
     align-items: center;
     padding: 20px;
     background-color: #eb7b3b;
-    color: #1d6fa5
+    color: #1d6fa5;
     border-bottom: 1px solid #e9ecef;
+
 }
 
 h1 {
-    color: #1d6fa5
+    color: #1d6fa5;
 }
 
 .color {
-    color: #1d6fa5
+    color: #1d6fa5;
 }
 
 .nav-items li {
-    color: #1d6fa5
+    color: #1d6fa5;
+    border: 1px solid black;
 }

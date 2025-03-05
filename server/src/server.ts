@@ -8,6 +8,7 @@ import { resolvers } from './graphql/resolvers.js';  // Import GraphQL resolvers
 import bookRoutes from './routes/api/bookRoutes.js';  // Your existing routes
 import { connectDB } from './config/connection.js';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 
 
 const app: Application = express();
@@ -26,7 +27,7 @@ const startApolloServer = async () => {
 
   app.use('/api', bookRoutes);
   
-  app.use('/graphql', expressMiddleware(server)); 
+  app.use('/graphql', cors(), expressMiddleware(server)); 
   
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);

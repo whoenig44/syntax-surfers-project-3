@@ -5,13 +5,19 @@ import TheLibrary from "./Components/TheLibrary";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+    uri: 'http://localhost:5174/graphql',
+    cache: new InMemoryCache(),
+  });
 
 
 
 
 
 
-const App = () => <BrowserRouter><TheLibrary/></BrowserRouter>;
+const App = () => <ApolloProvider client={client}><BrowserRouter><TheLibrary/></BrowserRouter></ApolloProvider>;
 
 export default App;
 
