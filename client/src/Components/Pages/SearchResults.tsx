@@ -8,12 +8,20 @@ const SearchResults = () => {
   
   console.log(Location)
 
-  const renderSearchResults = () => {
-    return Location.state.results.map((book: any, index) => (
-      <li key={index} className="mt-2">{book.title} by {book.author}</li>
-    ))
+  interface Book {
+    title: string;
+    author: string;
+  }
 
-    }
+  interface LocationState {
+    results: Book[];
+  }
+
+  const renderSearchResults = () => {
+    return (Location.state as LocationState).results.map((book: Book, index: number) => (
+      <li key={index} className="mt-2">{book.title} by {book.author}</li>
+    ));
+  }
 
  
   return (
