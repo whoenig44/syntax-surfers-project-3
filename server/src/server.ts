@@ -34,10 +34,10 @@ const startApolloServer = async () => {
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
 
     app.get('*', (_req, res) => { //all unmatched routes return the React index.html file allowing React to handle the routing
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
     });
   }
 
