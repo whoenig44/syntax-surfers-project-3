@@ -1,43 +1,46 @@
-import { useEffect, useState } from "react";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../CSS/SearchResults.css";
 
-const apiEndPoint = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "";
+interface Book {
+  title: string;
+  author: string;
+  categories?: string[];
+  description?: string;
+}
 
-const SearchResults = () => {
-  const Location = useLocation();
-  
-  console.log(Location)
+interface LocationState {
+  results: Book[];
+}
 
-  interface Book {
-    title: string;
-    author: string;
-  }
+const SearchResults: React.FC = () => {
+  const location = useLocation();
 
-  interface LocationState {
-    results: Book[];
-  }
+  const results = (location.state as LocationState | undefined)?.results || [];
 
-  const renderSearchResults = () => {
-    return (Location.state as LocationState).results.map((book: Book, index: number) => (
-      <li key={index} className="mt-2">{book.title} by {book.author}</li>
-    ));
-  }
-
- 
   return (
     <div className="cards-container">
       <h1 className="text-2xl font-bold">Search Results</h1>
-      {Location.state?.results?.length ?
-      <ul className="list-disc pl-5">
-      {renderSearchResults()}
-      </ul>
-      : <p>No results found.</p>
-      }
+      <div>
+      {results.length > 0 ? (
+        results.map((book, index) => (
+          <div key={index} className="card">
+            <h2 className="title">{book.title}</h2>
+            <p className="author">by {book.author}</p>
+            {book.categories && <p className="categories">Categories: {book.categories.join(", ")}</p>}
+            {book.description && <p className="description">{book.description}</p>}
+            </div>
+          
+        ))
+      ) : (
+        <p>No results found.</p>
+      )}
+
+     </div> 
     </div>
   );
 };
 
 export default SearchResults;
+
 
 
