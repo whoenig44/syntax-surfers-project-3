@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
+import "../CSS/SearchResults.css";
 
 const apiEndPoint = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "";
 
@@ -25,7 +26,7 @@ const SearchResults = () => {
 
  
   return (
-    <div className="p-4">
+    <div className="cards-container">
       <h1 className="text-2xl font-bold">Search Results</h1>
       {Location.state?.results?.length ?
       <ul className="list-disc pl-5">
