@@ -5,10 +5,26 @@ import TheLibrary from "./Components/TheLibrary";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:5174/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+}
+);
 
 const client = new ApolloClient({
-    uri: 'http://localhost:5174/graphql',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 

@@ -16,6 +16,19 @@ export const typeDefs = gql`
     bookId: ID!
     checkedOut: Boolean!
 }
+    type User {
+    id: ID!
+    password: String!
+    email: String!
+    username: String!
+    books: [UserBook]
+  }
+
+  type AuthInfo {
+    token: String!
+    user: User!
+  }
+
 
   type Query {
     books: [Book] 
@@ -30,6 +43,7 @@ export const typeDefs = gql`
   type Mutation {
     checkOutBook(userId: ID!, bookId: ID!): UserBook
     returnBook(userId: ID!, bookId: ID!): UserBook
+    login(username: String!, password: String!): AuthInfo
 }
   
 `;

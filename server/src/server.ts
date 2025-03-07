@@ -9,6 +9,7 @@ import bookRoutes from './routes/api/bookRoutes.js';  // Your existing routes
 import { connectDB } from './config/connection.js';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import JWT from 'jsonwebtoken';
 
 
 const app: Application = express();
@@ -17,6 +18,8 @@ const PORT = process.env.PORT || 5174;
 const server = new ApolloServer({
   typeDefs,  // GraphQL schema definitions
   resolvers, // GraphQL resolvers
+  
+
 });
 
 const startApolloServer = async () => {
@@ -27,7 +30,20 @@ const startApolloServer = async () => {
 
   app.use('/api', bookRoutes);
   
-  app.use('/graphql', cors(), expressMiddleware(server)); 
+  app.use('/graphql', cors(), expressMiddleware(server, {
+    context: async ({ req }:any) => {
+    const authTokenHeader = req.headers.authorization || '';
+    const authTokenValue = authTokenHeader.split(' ')[1];
+    if (authTokenValue) {
+    const verifiedToken = JWT.verify(authTokenValue, process.env.JWT_SECRET!);
+    console.log("verifiedToken", verifiedToken);
+      return { session: verifiedToken }; //Session contains user's ID, username, and email
+
+    } else {
+      return { user: null };
+    }
+  }
+  })); 
   
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);

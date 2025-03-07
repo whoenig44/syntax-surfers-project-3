@@ -2,10 +2,24 @@ import React, { useState, FormEvent, ChangeEvent } from "react";
 // import Auth from '../../utils/auth';  // Import the Auth utility for managing authentication state
 // import { login } from "../../api/authAPI";  // Import the login function from the API
 // import { UserLogin } from "../../interfaces/UserLogin";  // Import the interface for UserLogin
+import { useMutation, gql } from "@apollo/client";
 
 const apiEndPoint = process.env.NODE_ENV === 'production' ? "": 'http://localhost:3001';
 
+const LOGIN_USER = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+    
+      token
+      user {
+        id
+}
+    }
+  }
+`;
+
 const Login = () => {
+  const [loginUser, { loading, error, data }] = useMutation(LOGIN_USER);
   // State to manage the login form data
   const [loginData, setLoginData] = useState<any>({
     username: '',
@@ -29,22 +43,28 @@ const Login = () => {
     //   const data = await login(loginData);
       // If login is successful, call Auth.login to store the token in localStorage
     //   Auth.login(data.token);
-    const res = await fetch(`${apiEndPoint}/api/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginData)
-    })
-    const data = await res.json();
-    console.log(data);
-    if (data.token) {
-        localStorage.setItem('token', data.token);
+    // const res = await fetch(`${apiEndPoint}/api/login`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(loginData)
+    // })
+    // const data = await res.json();
+    // console.log(data);
+    loginUser({
+      variables: {
+        username: loginData.username || '',
+        password: loginData.password || ''
+      },
+      onCompleted: (data) => {
+        console.log(data);
+        localStorage.setItem('token', data.login.token);
         window.location.assign('/');
-    } else {
-        console.error('Failed to login');
-        alert('Failed to login');
-    }
+      },
+      
+    });
+    
 
     } catch (err) {
       console.error('Failed to login', err);  // Log any errors that occur during login

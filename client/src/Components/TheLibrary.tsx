@@ -10,6 +10,7 @@ import Header from './Header';
 import { Page } from './PageTypes';
 import { useNavigate } from 'react-router-dom';
 import SearchResults from './Pages/SearchResults';  
+import Login from './Pages/Login';
 
 export default function TheLibrary(): JSX.Element {
     const [currentPage, setCurrentPage] = useState<Page>('Home');
@@ -29,6 +30,7 @@ export default function TheLibrary(): JSX.Element {
                     <Route path="/mybooks" element={<MyBooks />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/search-results" element={<SearchResults />} />
+                    <Route path="/login" element={<Login />} />
                 </Routes>
              </div>   
             </main>
