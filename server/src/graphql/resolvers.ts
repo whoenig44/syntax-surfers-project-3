@@ -140,9 +140,9 @@ export const resolvers = {
           console.log(user);
           // TODO: Look into why hashes aren't comparing correctly
           // const passwordCompare = await bcrypt.compare(password, user.password);
-          // const hashedPassword = await bcrypt.hash(password, 10);
+         
           // console.log(passwordCompare);
-          // console.log(hashedPassword);
+          
           // if (!passwordCompare) {
           //   throw new Error('Invalid login credentials');
           // }
