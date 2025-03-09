@@ -16,16 +16,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
     <ul className="nav nav-tabs">
       {/* Home */}
 
-      <li className="nav-item">
-        <a
-          href="/login"
-          onClick={(e) => { e.preventDefault(); handlePageChange('Login'); }}
-          className={currentPage === 'Login' ? 'nav-link active' : 'nav-link'}
-          
-        >
-          Login
-        </a>
-      </li>
+      
       <li className="nav-item">
         <a
           href="/"
