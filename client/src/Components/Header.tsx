@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import { Page } from './PageTypes';
 import "./CSS/Header.css";
-import Loginbar from './loginbar';
+import Loginbar from './Loginbar';
 
 interface HeaderProps {
   currentPage: Page;

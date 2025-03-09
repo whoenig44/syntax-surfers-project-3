@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
-import  User  from '../models/user.js';
+import User from '../models/user.js';
 import { Book } from '../models/bookModel.js';
 import { UserBooks } from '../models/userBooksModel.js';
 import { books } from './seedData.js';
-//import fs from 'fs';
+import { connectDB } from '../config/connection.js';
 
 // Sample user data (with plain-text passwords, to be hashed)
 const users = [
@@ -24,11 +24,11 @@ const users = [
   { id: 15, username: "noah_clark", email: "noah_clark@example.com", password: "NoahClark2023" }
 ];
 
-//Sample user-book relationships
+// Sample user-book relationships
 const userBooks = [
-    { username: "john_doe", bookTitle: "The Pragmatic Programmer", checkedOut: true },
-    { username: "jane_smith", bookTitle: "Clean Code", checkedOut: true }
-  ];
+  { username: "john_doe", bookTitle: "The Pragmatic Programmer", checkedOut: true },
+  { username: "jane_smith", bookTitle: "Clean Code", checkedOut: true }
+];
 
 // Hash passwords and seed users
 export const seedUsers = async () => {
@@ -51,47 +51,50 @@ export const seedUsers = async () => {
 
 // Seed books
 export const seedBooks = async () => {
-    try {
-      await Book.insertMany(books);
-      console.log("Books seeded successfully");
-    } catch (err) {
-      console.error("Error seeding books:", err);
-    }
-  };
-  
-  // Seed user-book relationships
-  const seedUserBooks = async () => {
-    try {
-      for (let ub of userBooks) {
-        const user = await User.findOne({ username: ub.username });
-        const book = await Book.findOne({ title: ub.bookTitle });
-  
-        if (user && book) {
-          const newUserBook = new UserBooks({
-            userId: user._id,
-            bookId: book._id,
-            checkedOut: ub.checkedOut,
-          });
-          await newUserBook.save();
-          console.log(`${ub.username} checked out "${ub.bookTitle}"`);
-        }
+  try {
+    await Book.insertMany(books);
+    console.log("Books seeded successfully");
+  } catch (err) {
+    console.error("Error seeding books:", err);
+  }
+};
+
+// Seed user-book relationships
+const seedUserBooks = async () => {
+  try {
+    for (let ub of userBooks) {
+      const user = await User.findOne({ username: ub.username });
+      const book = await Book.findOne({ title: ub.bookTitle });
+
+      if (user && book) {
+        const newUserBook = new UserBooks({
+          userId: user._id,
+          bookId: book._id,
+          checkedOut: ub.checkedOut,
+        });
+        await newUserBook.save();
+        console.log(`${ub.username} checked out "${ub.bookTitle}"`);
       }
-    } catch (err) {
-      console.error("Error seeding user-books:", err);
     }
-  };
-  
-  // Seed all data
-  const seedDatabase = async () => {
-    try {
-      await seedUsers();
-      await seedBooks();
-      await seedUserBooks();
-      console.log("Database seeding complete!");
-    } catch (err) {
-      console.error("Error seeding database:", err);
-    }
-  };
-  
-  seedDatabase();
+  } catch (err) {
+    console.error("Error seeding user-books:", err);
+  }
+};
+
+// Seed all data
+const seedDatabase = async () => {
+  try {
+    await connectDB(); // Ensure the database is connected before seeding
+    await seedUsers();
+    await seedBooks();
+    await seedUserBooks();
+    console.log("Database seeding complete!");
+    process.exit(0); // Exit process with success
+  } catch (err) {
+    console.error("Error seeding database:", err);
+    process.exit(1); // Exit process with failure
+  }
+};
+
+seedDatabase();
 
