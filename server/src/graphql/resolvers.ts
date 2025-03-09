@@ -3,7 +3,7 @@ import { Book } from '../models/bookModel.js';
 import { UserBooks } from '../models/userBooksModel.js';
 //import { checkOutBook, getBooksByCategory } from '../controllers/bookController';
 import JWT from 'jsonwebtoken';
-// import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
 
 interface ReturnBookArgs {
@@ -128,14 +128,13 @@ export const resolvers = {
             throw new Error('Error returning book');
         }
       },
-
-      login: async (_: any, { username, password }: any) => {
+      signup: async (_: any, { username, email, password }: any) => {
         try {
-          console.log(username, password);
-          const user = await User.findOne({ username  });
+          console.log(username, email, password);
+          const user = await User.create({ username, email, password  });
           
           if (!user) {
-            throw new Error('Invalid login credentials');
+            throw new Error('Could not create user');
           }
           console.log(user);
           // TODO: Look into why hashes aren't comparing correctly
@@ -146,6 +145,31 @@ export const resolvers = {
           // if (!passwordCompare) {
           //   throw new Error('Invalid login credentials');
           // }
+          // const AuthToken = JWT.sign({ id: user._id, email: user.email, user: user.username }, process.env.JWT_SECRET!);
+          // console.log(AuthToken);
+          return user;
+        } catch (err) {
+          console.log(err);
+          throw new Error('Error creating user');
+        }
+      },
+      login: async (_: any, { username, password }: any) => {
+        try {
+          console.log(username, password);
+          const user = await User.findOne({ username  });
+          
+          if (!user) {
+            throw new Error('Invalid login credentials');
+          }
+          console.log(user);
+          // TODO: Look into why hashes aren't comparing correctly
+          const passwordCompare = await bcrypt.compare(password, user.password);
+         
+          console.log("hash password", passwordCompare);
+          
+          if (!passwordCompare) {
+            throw new Error('Invalid login credentials');
+          }
           const AuthToken = JWT.sign({ id: user._id, email: user.email, user: user.username }, process.env.JWT_SECRET!);
           console.log(AuthToken);
           return { token: AuthToken, user };

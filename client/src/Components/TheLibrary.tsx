@@ -11,6 +11,7 @@ import { Page } from './PageTypes';
 import { useNavigate } from 'react-router-dom';
 import SearchResults from './Pages/SearchResults';  
 import Login from './Pages/Login';
+import Signup from './Pages/Signup';
 
 export default function TheLibrary(): JSX.Element {
     const [currentPage, setCurrentPage] = useState<Page>('Home');
@@ -31,6 +32,7 @@ export default function TheLibrary(): JSX.Element {
                     <Route path="/about" element={<About />} />
                     <Route path="/search-results" element={<SearchResults />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
                 </Routes>
              </div>   
             </main>

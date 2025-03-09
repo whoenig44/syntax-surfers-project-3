@@ -4,6 +4,7 @@ import { Page } from './PageTypes';
 import "./CSS/Header.css";
 
 
+
 interface NavbarProps {
   currentPage: Page;
   handlePageChange: (page: Page) => void;
@@ -14,6 +15,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, handlePageChange}) => {
   return (
     <ul className="nav nav-tabs">
       {/* Home */}
+
+      <li className="nav-item">
+        <a
+          href="/login"
+          onClick={(e) => { e.preventDefault(); handlePageChange('Login'); }}
+          className={currentPage === 'Login' ? 'nav-link active' : 'nav-link'}
+          
+        >
+          Login
+        </a>
+      </li>
       <li className="nav-item">
         <a
           href="/"
