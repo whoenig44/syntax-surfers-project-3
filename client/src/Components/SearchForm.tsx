@@ -4,6 +4,7 @@ import { Input } from "./ui/input";
 import { Select, SelectItem } from "./ui/select";
 import { Button } from "./ui/button";
 import { gql, useLazyQuery } from "@apollo/client";
+import "./CSS/SearchResults.css";
 
 const GET_RESULTS = gql`
   query getBooksBySearch($author: String, $title: String, $category: String) {
@@ -71,7 +72,7 @@ const SearchForm: React.FC = () => {
         <SelectItem value="Networking">Networking</SelectItem>
         <SelectItem value="Data Science">Data Science</SelectItem>
       </Select>
-      <Button type="submit" className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition-all">
+      <Button type="submit" className="search-button">
         {loading ? "Searching..." : "Search"}
       </Button>
       {error && <p className="text-red-500">Error fetching books.</p>}
