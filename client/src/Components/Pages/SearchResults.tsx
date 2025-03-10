@@ -4,6 +4,7 @@ import "../CSS/SearchResults.css";
 import "../../index.css"
 
 interface Book {
+  id: string;
   title: string;
   author: string;
   categories?: string[];
@@ -16,7 +17,7 @@ interface LocationState {
 
 const CHECK_OUT_BOOK = gql`
   mutation CheckOutBook($userId: ID, $bookId: ID!) {
-    checkOutBook(title: $title) {
+    checkOutBook(userId: $userId, bookId: $bookId) {
       success
       message
     }
@@ -29,11 +30,20 @@ const SearchResults: React.FC = () => {
 
   const [checkOutBook, { loading, error }] = useMutation(CHECK_OUT_BOOK);
 
-  const handleCheckOut = async (title: string) => {
+  const handleCheckOut = async (bookId: string) => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("You must be logged in to check out a book.");
+      return;
+    }
+    
     try {
-      const { data } = await checkOutBook({ variables: { title } });
+      const { data } = await checkOutBook({ variables: { userId, bookId } });
+      
+      
       if (data.checkOutBook.success) {
-        alert(`Successfully checked out: ${title}`);
+        alert(`Successfully checked out: ${bookId}`);
       } else {
         alert(`Failed to check out: ${data.checkOutBook.message}`);
       }
