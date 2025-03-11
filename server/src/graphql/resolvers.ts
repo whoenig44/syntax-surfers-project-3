@@ -6,6 +6,7 @@ import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 
+
 interface ReturnBookArgs {
   userId: string;
   bookId: string;
@@ -22,6 +23,15 @@ export const resolvers = {
             throw new Error('Error fetching books by category');
         }
     }, 
+
+    checkOuts: async (_: any) => {
+      try {
+          const checkOuts = await UserBooks.find({ checkedOut: true });
+          return checkOuts;
+      }   catch (err) {
+          throw new Error('Error fetching checked out books');
+      }
+  }, 
 
     getBooksByName: async (_: any, { author }: any) => {
         try {
@@ -77,8 +87,10 @@ export const resolvers = {
 
   Mutation: {
     //Check out a book for a user.
-    checkOutBook: async (_: any, { userId, bookId }: any) => {
+    checkOutBook: async (_: any, { bookId }: any, ctx: any) => {
+      console.log("resolver context", ctx);
       try {
+        const userId = ctx.session.id;
         const user = await User.findById(userId);
         const book = await Book.findById(bookId);
 
@@ -105,6 +117,7 @@ export const resolvers = {
 
         return userBook;
       } catch (err) {
+        console.log(err)
         throw new Error('Error checking out book');
       }
     },

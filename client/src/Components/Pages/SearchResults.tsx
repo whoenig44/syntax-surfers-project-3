@@ -1,9 +1,12 @@
 import { useLocation } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import "../CSS/SearchResults.css";
 import "../../index.css"
+import { useEffect, useState } from "react";
+
 
 interface Book {
+  id: string;
   title: string;
   author: string;
   categories?: string[];
@@ -14,11 +17,20 @@ interface LocationState {
   results: Book[];
 }
 
+const GET_CHECKOUTS = gql`
+  query checkOuts {
+    checkOuts {
+      userId
+      bookId
+    }
+  }
+`;
+
 const CHECK_OUT_BOOK = gql`
-  mutation CheckOutBook($userId: ID, $bookId: ID!) {
-    checkOutBook(title: $title) {
-      success
-      message
+  mutation CheckOutBook( $bookId: ID!) {
+    checkOutBook(bookId: $bookId) {
+      userId
+      bookId
     }
   }
 `;
@@ -26,21 +38,44 @@ const CHECK_OUT_BOOK = gql`
 const SearchResults: React.FC = () => {
   const location = useLocation();
   const results = (location.state as LocationState | undefined)?.results || [];
+  console.log(results)
 
+  const { data: checkOutsData } = useQuery(GET_CHECKOUTS);
   const [checkOutBook, { loading, error }] = useMutation(CHECK_OUT_BOOK);
 
-  const handleCheckOut = async (title: string) => {
+  const [checkedOutBooks, setCheckedOutBooks] = useState<any>([]);
+
+
+  useEffect(() => {
+
+    console.log("checkOutsData", checkOutsData);
+    setCheckedOutBooks(checkOutsData ? checkOutsData.checkOuts : []);
+  }, [checkOutsData]);
+ 
+
+  const handleCheckOut = async (bookId: String) => {
     try {
-      const { data } = await checkOutBook({ variables: { title } });
-      if (data.checkOutBook.success) {
-        alert(`Successfully checked out: ${title}`);
+      // const userID = "123"; // Hardcoded for now
+      const { data } = await checkOutBook({ variables: { bookId } });
+      console.log("checkout book data", data);
+      if (data.checkOutBook.bookId) {
+        alert(`Successfully checked out: ${bookId}`);
+        setCheckedOutBooks([...checkedOutBooks, data.checkOutBook]);
       } else {
-        alert(`Failed to check out: ${data.checkOutBook.message}`);
+        alert(`Failed to check out: ${data.checkOutBook.bookId}`);
       }
     } catch (err) {
       console.error("Error checking out book:", err);
       alert("An error occurred while checking out the book.");
     }
+  };
+
+  const checkDisableButton = (bookId: string) => {
+    if (!checkedOutBooks.length) {
+      return false;
+    }
+    const checkedOut =  checkedOutBooks.some((checkOut: { bookId: string }) => checkOut.bookId === bookId);
+    return checkedOut;
   };
 
   return (
@@ -56,8 +91,9 @@ const SearchResults: React.FC = () => {
               {book.description && <p className="description">{book.description}</p>}
               <button 
                 className="checkout-button" 
-                onClick={() => handleCheckOut(book.title)}
-                disabled={loading}
+                onClick={() => handleCheckOut(book.id)}
+                disabled={checkDisableButton(book.id)}
+                style={{ backgroundColor: checkDisableButton(book.id) ? "gray" : "" }}
               >
                 {loading ? "Checking Out..." : "Check Out"}
               </button>
