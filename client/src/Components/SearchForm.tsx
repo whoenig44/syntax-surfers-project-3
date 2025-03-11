@@ -67,10 +67,10 @@ const SearchForm: React.FC = () => {
         <SelectItem value="Cybersecurity">Cybersecurity</SelectItem>
         <SelectItem value="DevOps">DevOps</SelectItem>
         <SelectItem value="Cloud Computing">Cloud Computing</SelectItem>
-        <SelectItem value="AI">Machine Learning/AI</SelectItem>
+        
         <SelectItem value="Software Development">Software Development</SelectItem>
         <SelectItem value="Networking">Networking</SelectItem>
-        <SelectItem value="Data Science">Data Science</SelectItem>
+        
       </Select>
       <Button type="submit" className="search-button">
         {loading ? "Searching..." : "Search"}
