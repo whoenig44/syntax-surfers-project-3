@@ -7,7 +7,7 @@ import { authenticateToken } from '../middleware/auth.js';
 // Login function to authenticate a user
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;  // Extract username and password from request body
-  console.log(username, password)
+  // console.log(username, password)
 
   try {
     // Find the user in the MongoDB database by username
