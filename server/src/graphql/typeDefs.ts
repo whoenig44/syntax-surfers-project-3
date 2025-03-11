@@ -12,6 +12,7 @@ export const typeDefs = gql`
   }
 
   type UserBook {
+  id: ID!
     userId: ID!
     bookId: ID!
     checkedOut: Boolean!
