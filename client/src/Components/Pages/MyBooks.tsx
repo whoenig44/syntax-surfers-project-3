@@ -50,6 +50,7 @@ const MyBooks: React.FC = () => {
   return (
     <div className="cards-container">
       <h1 className="text-2xl font-bold">My Checked Out Books</h1>
+      <div></div>
       {checkedOutBooks.length > 0 ? (
         checkedOutBooks.map((book) => (
           <div key={book.id} className="card">

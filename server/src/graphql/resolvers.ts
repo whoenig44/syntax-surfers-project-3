@@ -154,7 +154,7 @@ export const resolvers = {
               checkedOut: userBooks.checkedOut,
             };
           } catch (err) {
-            console.error(`Error returning book with ID ${bookId} for user ${userId}:`, err);
+            console.error(`Error returning book with ID ${bookId}`, err);
             throw new Error('Error returning book');
         }
       },
