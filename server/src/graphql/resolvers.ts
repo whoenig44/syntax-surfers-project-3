@@ -23,11 +23,12 @@ export const resolvers = {
             throw new Error('Error fetching books by category');
         }
     }, 
-  },
+  
 
     checkOuts: async (_: any) => {
       try {
           const checkOuts = await UserBooks.find({ checkedOut: true });
+          console.log("Checkouts:", checkOuts);
           return checkOuts;
       }   catch (err) {
           throw new Error('Error fetching checked out books');
@@ -65,8 +66,9 @@ export const resolvers = {
       }
     },
   
-    userBooks: async (_: any, { userId }: any) => {
+    userBooks: async (_: any, __:any, ctx: any) => {
       try {
+        const userId = ctx.session.id;
         console.log("Fetching books for user:", userId);
         
         const userBooks = await UserBooks.find({ userId, checkedOut: true });
@@ -89,7 +91,7 @@ export const resolvers = {
         throw new Error("Error fetching user books");
       }
     },
-    
+  },
 
 
   Mutation: {
@@ -130,8 +132,9 @@ export const resolvers = {
     },
 
 
-    returnBook: async (_: any, { userId, bookId }: ReturnBookArgs) => {
+    returnBook: async (_: any, { bookId }: ReturnBookArgs, ctx: any) => {
         try {
+          const userId = ctx.session.id;
             //Find the user-book relationship
             const userBooks = await UserBooks.findOne({ userId, bookId });
 

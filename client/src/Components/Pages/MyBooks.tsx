@@ -9,8 +9,8 @@ interface Book {
 }
 
 const GET_USER_BOOKS = gql`
-  query getUserBooks($userId: ID!) {
-    userBooks(userId: $userId) {
+  query getUserBooks {
+    userBooks {
       id
       title
       author
@@ -19,10 +19,9 @@ const GET_USER_BOOKS = gql`
 `;
 
 const MyBooks: React.FC = () => {
-  const userId = "123"; // Replace this with actual user authentication logic
-
+  
   const { data, loading, error } = useQuery(GET_USER_BOOKS, {
-    variables: { userId },
+   
     onCompleted: (data) => console.log("Fetched user books:", data),
   });
 

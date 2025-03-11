@@ -37,13 +37,13 @@ export const typeDefs = gql`
     getBooksByName(author: String!): [Book]
     getBooksByTitle(title: String!): [Book]
     getBooksBySearch(author: String, title: String, category: String): [Book]
-    userBooks(userId: ID!): [Book]
+    userBooks: [Book]
     checkOuts: [UserBook]
   }
 
   type Mutation {
     checkOutBook( bookId: ID!): UserBook
-    returnBook(userId: ID!, bookId: ID!): UserBook
+    returnBook( bookId: ID!): UserBook
     signup(username: String!, email: String!, password: String!): User
     login(username: String!, password: String!): AuthInfo
 }
