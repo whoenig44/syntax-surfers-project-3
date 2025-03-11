@@ -135,8 +135,10 @@ export const resolvers = {
     returnBook: async (_: any, { bookId }: ReturnBookArgs, ctx: any) => {
         try {
           const userId = ctx.session.id;
+          console.log("Attempting to return book:", bookId, "for user:", userId); 
             //Find the user-book relationship
             const userBooks = await UserBooks.findOne({ userId, bookId });
+            console.log(`UserBooks found: ${userBooks}`);
 
             if (!userBooks || !userBooks.checkedOut) {
                 throw new Error('Book not checked out or not found');
@@ -146,8 +148,13 @@ export const resolvers = {
             userBooks.checkedOut = false;
             await userBooks.save();
 
-            return userBooks;
+            console.log(`Book with ID ${bookId} successfully returned for user ${userId}`);
+            return {
+              id: userBooks._id,
+              checkedOut: userBooks.checkedOut,
+            };
           } catch (err) {
+            console.error(`Error returning book with ID ${bookId} for user ${userId}:`, err);
             throw new Error('Error returning book');
         }
       },
