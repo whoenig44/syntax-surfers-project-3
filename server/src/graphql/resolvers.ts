@@ -23,6 +23,7 @@ export const resolvers = {
             throw new Error('Error fetching books by category');
         }
     }, 
+  },
 
     checkOuts: async (_: any) => {
       try {
@@ -64,25 +65,31 @@ export const resolvers = {
       }
     },
   
-  userBooks: async (_: any, { userId }: any) => {
-    try {
-      const userBooks = await UserBooks.find({ userId, checkedOut: true });
-
-      if (!userBooks || userBooks.length === 0) {
-        throw new Error('No books checked out by this user');
+    userBooks: async (_: any, { userId }: any) => {
+      try {
+        console.log("Fetching books for user:", userId);
+        
+        const userBooks = await UserBooks.find({ userId, checkedOut: true });
+        console.log("UserBooks result:", userBooks);
+    
+        if (!userBooks || userBooks.length === 0) {
+          console.log("No books found for user.");
+          return []; // Return an empty array instead of throwing an error
+        }
+        
+        const books = await Book.find({
+          _id: { $in: userBooks.map((userBook: { bookId: any }) => userBook.bookId) },
+        });
+    
+        console.log("Books fetched:", books);
+        
+        return books;
+      } catch (err) {
+        console.error("Error in userBooks resolver:", err);
+        throw new Error("Error fetching user books");
       }
-      
-      //Fetch the books corresponding to the userBooks
-      const books = await Book.find({ 
-        _id: { $in: userBooks.map((userBook: { bookId: any; }) => userBook.bookId) }, 
-    });
-
-    return books;
-  } catch (err) {
-    throw new Error('Error fetching user books');
-  }
-},
-},
+    },
+    
 
 
   Mutation: {

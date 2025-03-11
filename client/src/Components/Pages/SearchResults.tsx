@@ -80,7 +80,9 @@ const SearchResults: React.FC = () => {
 
   return (
     <div className="cards-container">
+      <div>
       <h1 className="text-2xl font-bold">Search Results</h1>
+      </div>
       <div>
         {results.length > 0 ? (
           results.map((book, index) => (
