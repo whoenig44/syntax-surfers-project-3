@@ -43,10 +43,18 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    checkOutBook( bookId: ID!): UserBook
-    returnBook( bookId: ID!): UserBook
+    checkOutBook(bookId: ID!): UserBook
+    returnBook(bookId: ID!): UserBook
+    addBook(
+      title: String!
+      author: String!
+      publicationDate: String
+      isbn: String
+      categories: [String]
+      description: String
+    ): Book
+    deleteBook(title: String, isbn: String): Book
     signup(username: String!, email: String!, password: String!): User
     login(username: String!, password: String!): AuthInfo
-}
-  
+  }
 `;
