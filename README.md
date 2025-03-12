@@ -45,7 +45,7 @@ Application created by the Semantic Surfers Web Development Team, members shown 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/whoenig44/bootcamp-project-1/blob/main/LICENSE.md) file for full details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/whoenig44/syntax-surfers-project-3/blob/main/LICENSE.md) file for full details.
 
 ## Acknowledgments
 
